@@ -1,8 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "2022-11-14 7.41.16 PM.jpg",
-      "idiom" : "universal"
+      "filename" : "avatar.jpg",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
     }
   ],
   "info" : {
