@@ -2,7 +2,7 @@
 //  SceneDelegate.swift
 //  PersonsResume
 //
-//  Created by Людмила Долонтаева on 2023-08-01.
+//  Created by . on 2023-09-01.
 //
 
 import UIKit
