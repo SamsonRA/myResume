@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SnapKit
 
 final class ResumeView: UIView {
 
@@ -33,7 +34,7 @@ final class ResumeView: UIView {
 
     private func setUpLayout() {
         let scrollContentGuide = scrollView.contentLayoutGuide
-
+        
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollContainerView.translatesAutoresizingMaskIntoConstraints = false
         topViewContainer.translatesAutoresizingMaskIntoConstraints = false
@@ -48,7 +49,7 @@ final class ResumeView: UIView {
         mySkillsLabel.translatesAutoresizingMaskIntoConstraints = false
         editButton.translatesAutoresizingMaskIntoConstraints = false
         topFillerView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         addSubview(topFillerView)
         addSubview(scrollView)
         scrollView.addSubview(scrollContainerView)
@@ -63,74 +64,77 @@ final class ResumeView: UIView {
         topViewContainer.addSubview(fullNameLabel)
         topViewContainer.addSubview(descriptionLabel)
         topViewContainer.addSubview(townLabel)
-
-        NSLayoutConstraint.activate([
-
-            scrollView.topAnchor.constraint(equalTo: topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
-
-            topFillerView.topAnchor.constraint(equalTo: topAnchor),
-            topFillerView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            topFillerView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            topFillerView.bottomAnchor.constraint(greaterThanOrEqualTo: scrollContainerView.topAnchor),
-
-            scrollContainerView.leadingAnchor.constraint(equalTo: scrollContentGuide.leadingAnchor),
-            scrollContainerView.trailingAnchor.constraint(equalTo: scrollContentGuide.trailingAnchor),
-            scrollContainerView.topAnchor.constraint(equalTo: scrollContentGuide.topAnchor),
-            scrollContainerView.bottomAnchor.constraint(equalTo: scrollContentGuide.bottomAnchor),
-
-            scrollContainerView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            scrollContainerView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            scrollContainerView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-
-            topViewContainer.topAnchor.constraint(equalTo: scrollContainerView.topAnchor),
-            topViewContainer.bottomAnchor.constraint(equalTo: townLabel.bottomAnchor, constant: 19),
-            topViewContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
-            topViewContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
-
-            titleLabel.topAnchor.constraint(equalTo: topViewContainer.topAnchor, constant: 20),
-            titleLabel.centerXAnchor.constraint(equalTo: topViewContainer.centerXAnchor),
-
-            avatarImageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 42),
-            avatarImageView.leadingAnchor.constraint(equalTo: topViewContainer.leadingAnchor, constant: 120),
-            avatarImageView.trailingAnchor.constraint(equalTo: topViewContainer.trailingAnchor, constant: -120),
-            avatarImageView.heightAnchor.constraint(equalToConstant: avatarSize),
-
-            fullNameLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 16),
-            fullNameLabel.leadingAnchor.constraint(equalTo: topViewContainer.leadingAnchor, constant: 100),
-            fullNameLabel.trailingAnchor.constraint(equalTo: topViewContainer.trailingAnchor, constant: -100),
-
-            descriptionLabel.topAnchor.constraint(equalTo: fullNameLabel.bottomAnchor, constant: 4),
-            descriptionLabel.leadingAnchor.constraint(equalTo: topViewContainer.leadingAnchor, constant: 30),
-            descriptionLabel.trailingAnchor.constraint(equalTo: topViewContainer.trailingAnchor, constant: -30),
-
-            townLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor),
-            townLabel.leadingAnchor.constraint(equalTo: topViewContainer.leadingAnchor, constant: 30),
-            townLabel.trailingAnchor.constraint(equalTo: topViewContainer.trailingAnchor, constant: -30),
-
-            mySkillsLabel.topAnchor.constraint(equalTo: townLabel.bottomAnchor, constant: 40),
-            mySkillsLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-
-            editButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            editButton.topAnchor.constraint(equalTo: townLabel.bottomAnchor, constant: 40),
-
-            collectionView.topAnchor.constraint(equalTo: mySkillsLabel.bottomAnchor, constant: 20),
-            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-
-            aboutMeLabel.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 24),
-            aboutMeLabel.leadingAnchor.constraint(equalTo: scrollContainerView.leadingAnchor, constant: 16),
-
-            textMyDescription.topAnchor.constraint(equalTo: aboutMeLabel.bottomAnchor, constant: 8),
-            textMyDescription.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            textMyDescription.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            textMyDescription.bottomAnchor.constraint(equalTo: scrollContainerView.bottomAnchor)
-
-        ])
+        
+        //MARK:  Layouts
+        
+        scrollView.snp.makeConstraints { make in
+            make.top.left.right.bottom.equalToSuperview()
+            
+            
+        topFillerView.snp.makeConstraints { make in
+                make.top.left.right.equalToSuperview()
+                make.bottom.greaterThanOrEqualTo(scrollContainerView.snp_topMargin)
+            }
+        scrollContainerView.snp.makeConstraints { make in
+                make.top.left.right.bottom.equalTo(scrollContentGuide)
+                make.left.right.width.equalTo(scrollView)
+            }
+            
+        topViewContainer.snp.makeConstraints { make in
+                make.top.equalTo(scrollContainerView)
+                make.bottom.equalTo(townLabel).offset(19)
+                make.left.right.equalToSuperview()
+            }
+            
+        titleLabel.snp.makeConstraints { make in
+                make.top.equalTo(topViewContainer).offset(20)
+                make.centerX.equalTo(topViewContainer)
+            }
+        avatarImageView.snp.makeConstraints { make in
+                make.height.equalTo(avatarSize)
+                make.left.right.equalTo(topViewContainer).inset(120)
+                make.top.equalTo(titleLabel).offset(42)
+            }
+            
+        fullNameLabel.snp.makeConstraints { make in
+                make.left.right.equalTo(topViewContainer).inset(100)
+                make.top.equalTo(avatarImageView.snp_bottomMargin).offset(16)
+            }
+            
+        descriptionLabel.snp.makeConstraints { make in
+                make.left.right.equalTo(topViewContainer).inset(30)
+                make.top.equalTo(fullNameLabel.snp_bottomMargin).offset(12)
+            }
+            
+        townLabel.snp.makeConstraints { make in
+                make.top.equalTo(descriptionLabel.snp_bottomMargin).offset(12)
+                make.leading.trailing.equalTo(topViewContainer).inset(30)
+            }
+        mySkillsLabel.snp.makeConstraints { make in
+                make.top.equalTo(townLabel.snp_bottomMargin).offset(40)
+                make.leading.equalToSuperview().inset(16)
+            }
+        editButton.snp.makeConstraints { make in
+                make.trailing.equalToSuperview().inset(16)
+                make.top.equalTo(townLabel.snp_bottomMargin).offset(40)
+            }
+        collectionView.snp.makeConstraints { make in
+                make.leading.trailing.equalToSuperview().inset(16)
+                make.top.equalTo(mySkillsLabel.snp_bottomMargin).offset(30)
+            }
+        aboutMeLabel.snp.makeConstraints { make in
+                make.top.equalTo(collectionView.snp_bottomMargin).offset(34)
+                make.leading.equalTo(scrollContentGuide).inset(16)
+            }
+        textMyDescription.snp.makeConstraints { make in
+                make.leading.trailing.equalToSuperview().inset(16)
+                make.bottom.equalTo(scrollContainerView.snp_bottomMargin)
+                make.top.equalTo(aboutMeLabel.snp_bottomMargin).offset(16)
+            }
+        }
+        
+        
     }
-
     private func setUpStyle() {
 
         let image = UIImage(named: "town")
