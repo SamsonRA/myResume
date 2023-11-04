@@ -11,14 +11,14 @@ class SkillsService: SkillsServiceProtocol {
 
     private let userDefaults = UserDefaults.standard
     private let skillsKey = "Skills"
-    private let defaultSkills = [
+    private var defaultSkills = [
         SkillModel(skill: "Swift"),
-        SkillModel(skill: "SwiftUI"),
+        SkillModel(skill: "UIKit"),
         SkillModel(skill: "iOS Development"),
         SkillModel(skill: "REST APIs"),
         SkillModel(skill: "Git"),
-        SkillModel(skill: "Python"),
-        SkillModel(skill: "Unit Testing")
+        SkillModel(skill: "Alamofire"),
+        SkillModel(skill: "Kingfisher")
     ]
 
     func fetchSkills() -> [SkillModel] {
